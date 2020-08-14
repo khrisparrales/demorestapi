@@ -35,6 +35,7 @@ const logger = winston.createLogger({
 //routes
 app.use("/api/peliculas", PeliculasRoute);
 
+
 //start server
 app.listen(PORT, () => {
     // console.log("Server stated on Port: ", PORT);
