@@ -11,7 +11,7 @@ router.post("/", async(req, res) => {
         idimdb: req.body.idimdb,
         idtmdb: req.body.idtmdb,
         key: req.body.key,
-        name: req.body.bookName,
+        name: req.body.movieName,
         description: req.body.description,
         Coll: {
             idColl: req.body.idColl,
@@ -65,7 +65,7 @@ router.put("/:movieId", async(req, res) => {
             idimdb: req.body.idimdb,
             idtmdb: req.body.idtmdb,
             key: req.body.key,
-            name: req.body.bookName,
+            name: req.body.movieName,
             description: req.body.description,
             Coll: {
                 idColl: req.body.idColl,
@@ -81,14 +81,14 @@ router.put("/:movieId", async(req, res) => {
             url: req.body.url,
         }, { new: true }
     );
-    if (!updatedMovie) res.status(404).send("Book not found");
+    if (!updatedMovie) res.status(404).send("Movie not found");
     res.send(updatedMovie);
 });
 
-//DELETE: DELETE A BOOK BASED ON ID
+//DELETE: DELETE A movie BASED ON ID
 router.delete("/:movieId", async(req, res) => {
     const movie = await Movie.findByIdAndRemove(req.params.movieId);
-    if (!movie) res.status(404).send("book with id not found");
+    if (!movie) res.status(404).send("Movie with id not found");
     res.send(movie);
 });
 module.exports = router;

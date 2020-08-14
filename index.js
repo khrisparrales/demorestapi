@@ -33,7 +33,7 @@ const logger = winston.createLogger({
     exceptionHandlers: [new winston.transports.File({ filename: "exceptions.log" })],
 });
 //routes
-app.use("/api/peliculas", PeliculasRoute);
+app.use("/api/movies", PeliculasRoute);
 
 
 //start server
