@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const Book = require('../models/books');
+const { Book, validateBook } = require('../models/books');
 
 //POST: CREATE NEW BOOK
-router.post('/', (req, res) => {
+router.post('/', async(req, res) => {
+    const error = await validateBook(req.body);
+    if (error.message) res.status(400).send(error.message);
     book = new Book({
         id: req.body.id,
         idimdb: req.body.idimdb,
@@ -25,9 +27,12 @@ router.post('/', (req, res) => {
         url: req.body.url,
     });
     book.save().then(book => {
+        //  res.status(200).send("ok");
         res.send(book);
     }).catch(error => {
         res.status(500).send("Book no store on db");
     })
 })
+
+
 module.exports = router;

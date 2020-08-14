@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
-const Author = require('./author');
-const Coll = require('./collection');
+const mongoose = require("mongoose");
+const Author = require("./author");
+const Coll = require("./collection");
+const yup = require("yup");
 //book schema
 const BooksSchema = new mongoose.Schema({
     id: {
@@ -76,4 +77,20 @@ const BooksSchema = new mongoose.Schema({
         maxlength: 300,
     },
 });
-module.exports = new mongoose.model('Book', BooksSchema);
+
+const validateBook = (book) => {
+    const schema = yup.object().shape({
+        description: yup.string().required().min(3, 'Description es muy corta si no tiene agrege null').max(1000),
+        //add more restrinction
+    });
+    return schema
+        .validate(book)
+        .then((book) => book)
+        .catch((error) => {
+            //console.log(error));
+            return { message: error.message }
+        });
+};
+
+exports.Book = new mongoose.model("Book", BooksSchema);
+exports.validateBook = validateBook;
