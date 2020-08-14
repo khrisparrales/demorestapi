@@ -3,7 +3,7 @@ const Author = require("./author");
 const Coll = require("./collection");
 const yup = require("yup");
 //book schema
-const BooksSchema = new mongoose.Schema({
+const MoviesSchema = new mongoose.Schema({
     id: {
         type: Number,
         required: true,
@@ -78,19 +78,19 @@ const BooksSchema = new mongoose.Schema({
     },
 });
 
-const validateBook = (book) => {
+const validateMovie = (movie) => {
     const schema = yup.object().shape({
         description: yup.string().required().min(3, 'Description es muy corta si no tiene agrege null').max(1000),
         //add more restrinction
     });
     return schema
-        .validate(book)
-        .then((book) => book)
+        .validate(movie)
+        .then((movie) => movie)
         .catch((error) => {
             //console.log(error));
             return { message: error.message }
         });
 };
 
-exports.Book = new mongoose.model("Book", BooksSchema);
-exports.validateBook = validateBook;
+exports.Movie = new mongoose.model("movies", MoviesSchema);
+exports.validateMovie = validateMovie;
