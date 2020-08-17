@@ -5,7 +5,7 @@ const app = express();
 const PeliculasRoute = require('./routes/peliculas');
 const winston = require('winston');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 
 //connnect to mongodb atlas

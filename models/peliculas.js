@@ -41,12 +41,15 @@ const MoviesSchema = new mongoose.Schema({
         maxlength: 1000,
     },
     Coll: Coll.schema,
-    genre: {
-        type: String,
-        required: true,
-        minlength: 3,
-        maxlength: 20,
-    },
+    genre: [{
+        type: String
+    }],
+    // genre: {
+    //     type: [String],
+    //     required: true,
+    //     minlength: 3,
+    //     maxlength: 20,
+    // },
     rate: {
         type: Number,
         min: 1,
