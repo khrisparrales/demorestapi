@@ -4,32 +4,32 @@ const mongoose = require("mongoose");
 const CollectionSchema = new mongoose.Schema({
     idColl: {
         type: Number,
-        //  min: 1,
-        //max: 999999,
+        min: 1,
+        max: 999999,
     },
     name: {
         type: String,
         //     required: true,
-        // minlength: 3,
-        // maxlength: 300,
+        minlength: 3,
+        maxlength: 300,
     },
     imgColl: {
         type: String,
         //   required: true,
-        // minlength: 3,
-        // maxlength: 300,
+        minlength: 3,
+        maxlength: 300,
     },
     coverColl: {
         type: String,
         // required: true,
-        // minlength: 3,
-        // maxlength: 300,
+        minlength: 3,
+        maxlength: 300,
     },
     exist: {
         type: Boolean,
-        //    required: true,
+        required: true,
         //   minlength: 3,
         //  maxlength: 300,
     },
 });
-exports.Collection = new mongoose.model("Collection", CollectionSchema);
+module.exports = new mongoose.model("Collection", CollectionSchema);
