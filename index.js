@@ -3,7 +3,10 @@ const mongo = require("mongoose");
 require("dotenv").config();
 const app = express();
 const PeliculasRoute = require("./routes/peliculas");
+const Userroute = require("./routes/user");
+const UserRoute = require("./routes/us");
 const winston = require("winston");
+const cors = require("cors");
 
 const PORT = process.env.PORT || 3001;
 
@@ -20,6 +23,8 @@ mongo
     });
 //middlewares
 app.use(express.json());
+app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 // Add headers
 app.use(function(req, res, next) {
@@ -69,7 +74,7 @@ const logger = winston.createLogger({
 });
 //routes
 app.use("/api/movies", PeliculasRoute);
-
+app.use("/api", Userroute);
 //start server
 app.listen(PORT, () => {
     // console.log("Server stated on Port: ", PORT);

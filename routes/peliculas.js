@@ -1,9 +1,30 @@
 const express = require("express");
 const router = express.Router();
 const { Movie, validateMovie } = require("../models/peliculas");
+const jwt = require("jsonwebtoken");
+async function verifyToken(req, res, next) {
+    try {
+        if (!req.headers.authorization) {
+            return res.status(401).send("Unauhtorized Request");
+        }
+        let token = req.headers.authorization.split(" ")[1];
+        if (token === "null") {
+            return res.status(401).send("Unauhtorized Request");
+        }
 
+        const payload = await jwt.verify(token, "secretkey");
+        if (!payload) {
+            return res.status(401).send("Unauhtorized Request");
+        }
+        req.userId = payload._id;
+        next();
+    } catch (e) {
+        //console.log(e)
+        return res.status(401).send("Unauhtorized Request");
+    }
+}
 //POST: CREATE NEW MOVIE
-router.post("/", async(req, res) => {
+router.post("/", verifyToken, async(req, res) => {
     const error = await validateMovie(req.body);
     if (error.message) res.status(400).send(error.message);
     movie = new Movie({
@@ -59,7 +80,7 @@ router.get("/:movieId", async(req, res) => {
     res.send(movie);
 });
 //PUT: UPDATE MOVIE BASED ON ID
-router.put("/:movieId", async(req, res) => {
+router.put("/:movieId", verifyToken, async(req, res) => {
     const updatedMovie = await Movie.findByIdAndUpdate(
         req.params.movieId, {
             idimdb: req.body.idimdb,
@@ -86,7 +107,7 @@ router.put("/:movieId", async(req, res) => {
 });
 
 //DELETE: DELETE A movie BASED ON ID
-router.delete("/:movieId", async(req, res) => {
+router.delete("/:movieId", verifyToken, async(req, res) => {
     const movie = await Movie.findByIdAndRemove(req.params.movieId);
     if (!movie) res.status(404).send("Movie with id not found");
     res.send(movie);
