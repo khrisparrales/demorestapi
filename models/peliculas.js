@@ -8,31 +8,31 @@ const MoviesSchema = new mongoose.Schema({
         type: Number,
         required: true,
         minlength: 1,
-        maxlength: 10,
+        maxlength: 1000,
     },
     idimdb: {
         type: String,
         required: true,
         minlength: 1,
-        maxlength: 10,
+        maxlength: 1000,
     },
     idtmdb: {
         type: Number,
         required: true,
         minlength: 1,
-        maxlength: 10,
+        maxlength: 1000,
     },
     key: {
         type: String,
         required: true,
         minlength: 3,
-        maxlength: 50,
+        maxlength: 1000,
     },
-    name: {
+    movieName: {
         type: String,
         required: true,
         minlength: 3,
-        maxlength: 50,
+        maxlength: 1000,
     },
     description: {
         type: String,

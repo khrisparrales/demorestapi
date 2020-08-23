@@ -7,7 +7,7 @@ const CollectionSchema = new mongoose.Schema({
         min: 1,
         max: 999999,
     },
-    name: {
+    CollName: {
         type: String,
         //     required: true,
         minlength: 3,
