@@ -86,11 +86,11 @@ router.put("/:movieId", verifyToken, async(req, res) => {
             idimdb: req.body.idimdb,
             idtmdb: req.body.idtmdb,
             key: req.body.key,
-            name: req.body.movieName,
+            movieName: req.body.movieName,
             description: req.body.description,
             Coll: {
                 idColl: req.body.idColl,
-                name: req.body.CollName,
+                CollName: req.body.CollName,
                 imgColl: req.body.imgColl,
                 coverColl: req.body.coverColl,
                 exist: req.body.exist,
