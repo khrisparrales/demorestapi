@@ -33,78 +33,79 @@ router.post("/", verifyToken, async(req, res) => {
     const idtm = await Movie.findOne({ idtmdb });
     if (idtm) {
         res.status(401).send("The movie  exists");
-    }
-    if (error.message) res.status(400).send(error.message);
-
-
-    movie = new Movie({
-        id: req.body.id,
-        idimdb: req.body.idimdb,
-        idtmdb: req.body.idtmdb,
-        key: req.body.key,
-        movieName: req.body.movieName,
-        description: req.body.description,
-        Coll: {
-            idColl: req.body.idColl,
-            CollName: req.body.CollName,
-            imgColl: req.body.imgColl,
-            coverColl: req.body.coverColl,
-            exist: req.body.exist,
-        },
-        genre: req.body.genre,
-        rate: req.body.rate,
-        img: req.body.img,
-        cover: req.body.cover,
-        url: req.body.url,
-    });
-    if (req.body.exist == true) {
-        const { idColl } = req.body;
-        const idCollec = await Collec.findOne({ idColl });
-        if (!idCollec) {
-            coll = new Collec({
-                //     _id: req.body.idColl,
+    } else {
+        movie = new Movie({
+            id: req.body.id,
+            idimdb: req.body.idimdb,
+            idtmdb: req.body.idtmdb,
+            key: req.body.key,
+            movieName: req.body.movieName,
+            description: req.body.description,
+            Coll: {
                 idColl: req.body.idColl,
                 CollName: req.body.CollName,
                 imgColl: req.body.imgColl,
                 coverColl: req.body.coverColl,
                 exist: req.body.exist,
-                //peliculas: req.body._id,
-                peliculas: [movie._id]
-            });
-            coll.save();
-        } else {
-            var query = await Collec.findOne({
-                idColl: movie.Coll.idColl,
-            });
-            console.log(query.CollName);
-            const updatedcoll = await Collec.findByIdAndUpdate(
-                query._id, { $push: { peliculas: [movie._id] } }, { new: true }
-            );
-        }
+            },
+            genre: req.body.genre,
+            rate: req.body.rate,
+            img: req.body.img,
+            cover: req.body.cover,
+            url: req.body.url,
 
-        // console.log("Es " + movie.Coll._id);
-        // coll = new Collec({
-        //   //  _id: movie.Coll._id,
-        //   idColl: req.body.idColl,
-        //   CollName: req.body.CollName,
-        //   imgColl: req.body.imgColl,
-        //   coverColl: req.body.coverColl,
-        //   exist: req.body.exist,
-        // });
-        // coll.save();
-
-    } else {
-        console.log("Es false");
-    }
-    movie
-        .save()
-        .then((movie) => {
-            //  res.status(200).send("ok");
-            res.send(movie);
-        })
-        .catch((error) => {
-            res.status(500).send("Movie no store on db" + error);
         });
+        if (error.message) res.status(400).send(error.message);
+
+        if (req.body.exist == true) {
+            const { idColl } = req.body;
+            const idCollec = await Collec.findOne({ idColl });
+            if (!idCollec) {
+                coll = new Collec({
+                    //     _id: req.body.idColl,
+                    idColl: req.body.idColl,
+                    CollName: req.body.CollName,
+                    imgColl: req.body.imgColl,
+                    coverColl: req.body.coverColl,
+                    exist: req.body.exist,
+                    //peliculas: req.body._id,
+                    peliculas: [movie._id],
+                });
+                coll.save();
+            } else {
+                var query = await Collec.findOne({
+                    idColl: movie.Coll.idColl,
+                });
+                console.log(query.CollName);
+                const updatedcoll = await Collec.findByIdAndUpdate(
+                    query._id, { $push: { peliculas: [movie._id] } }, { new: true }
+                );
+            }
+
+            // console.log("Es " + movie.Coll._id);
+            // coll = new Collec({
+            //   //  _id: movie.Coll._id,
+            //   idColl: req.body.idColl,
+            //   CollName: req.body.CollName,
+            //   imgColl: req.body.imgColl,
+            //   coverColl: req.body.coverColl,
+            //   exist: req.body.exist,
+            // });
+            // coll.save();
+        } else {
+            console.log("Es false");
+        }
+        movie
+            .save()
+            .then((movie) => {
+                //  res.status(200).send("ok");
+                res.send(movie);
+            })
+            .catch((error) => {
+                res.status(500).send("Movie no store on db" + error);
+            });
+    }
+
 });
 //GET: GET ALL MOVIES
 router.get("/", (req, res) => {
