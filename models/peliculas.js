@@ -40,13 +40,44 @@ const MoviesSchema = new mongoose.Schema({
         minlength: 3,
         maxlength: 1000,
     },
-    Coll: Coll.schema,
+    Coll: {
+
+        idColl: {
+            type: Number,
+            min: 1,
+            max: 999999,
+        },
+        CollName: {
+            type: String,
+            //     required: true,
+            minlength: 3,
+            maxlength: 300,
+        },
+        imgColl: {
+            type: String,
+            //   required: true,
+            minlength: 3,
+            maxlength: 300,
+        },
+        coverColl: {
+            type: String,
+            // required: true,
+            minlength: 3,
+            maxlength: 300,
+        },
+        exist: {
+            type: Boolean,
+            required: true,
+            //   minlength: 3,
+            //  maxlength: 300,
+        }
+    },
     genre: [{
         type: String,
         required: true,
         minlength: 3,
         maxlength: 20,
-    }],
+    }, ],
     rate: {
         type: Number,
         min: 1,

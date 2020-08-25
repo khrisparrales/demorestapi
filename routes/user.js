@@ -3,13 +3,8 @@ const router = express.Router();
 const { Movie, validateMovie } = require("../models/peliculas");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
-router.post("/signup", async(req, res) => {
-    const { email, password } = req.body;
-    const newUser = new User({ email, password });
-    await newUser.save();
-    const token = await jwt.sign({ _id: newUser._id }, "secretkey");
-    res.status(200).json({ token });
-});
+const path = require("path");
+
 async function verifyToken(req, res, next) {
     try {
         if (!req.headers.authorization) {
@@ -31,6 +26,21 @@ async function verifyToken(req, res, next) {
         return res.status(401).send("Unauhtorized Request");
     }
 }
+//Registrar usuario
+router.post("/signup", async(req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (user) {
+        res.status(401).send("The email  exists");
+    } else {
+        const newUser = new User({ email, password });
+        await newUser.save();
+        const token = await jwt.sign({ _id: newUser._id }, "secretkey");
+        res.status(200).json({ token });
+    }
+
+});
+//iniciar sesion
 router.post("/signin", async(req, res) => {
     const { email, password } = req.body;
 
@@ -63,8 +73,9 @@ router.get("/private-tasks", verifyToken, (req, res) => {
         },
     ]);
 });
-router.get("/", verifyToken, (req, res) => {
-    res.send("hello");
+router.get("/", (req, res) => {
+    //res.send("hello");
+    res.sendFile(path.resolve("routes/req.html"));
 });
 
 
