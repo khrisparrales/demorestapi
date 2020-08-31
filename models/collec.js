@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-
 //book schema
 const CollecSchema = new mongoose.Schema({
     idColl: {
@@ -32,12 +31,16 @@ const CollecSchema = new mongoose.Schema({
         //   minlength: 3,
         //  maxlength: 300,
     },
+    // peliculas: {
+    //     type: ["Mixed"],
+    // },
     peliculas: [{
         type: String,
 
     }, ],
-});
 
+
+});
 
 exports.Collec = new mongoose.model("collection", CollecSchema);
 //exports.validateMovie = validateMovie;

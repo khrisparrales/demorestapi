@@ -21,4 +21,22 @@ router.get("/:collecId", async(req, res) => {
     res.send(collec);
 });
 
+//Editar collecion
+router.put("/:collecId", async(req, res) => {
+    const updatedMovie = await Collec.findByIdAndUpdate(
+        req.body._id, {
+            idColl: req.body.idColl,
+            CollName: req.body.CollName,
+            imgColl: req.body.imgColl,
+            movieName: req.body.movieName,
+            coverColl: req.body.coverColl,
+            exist: req.body.exist,
+            peliculas: req.body.peliculas,
+        }, { new: true }
+    );
+    if (!updatedMovie) res.status(404).send("Movie not found");
+    res.send(updatedMovie);
+});
+
+
 module.exports = router;

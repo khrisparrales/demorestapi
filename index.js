@@ -79,5 +79,5 @@ app.use("/api", Userroute);
 //start server
 app.listen(PORT, () => {
     // console.log("Server stated on Port: ", PORT);
-    logger.warn(`Server started at PORT ${PORT}`);
+    logger.warn(`Server started running at PORT ${PORT}`);
 });
