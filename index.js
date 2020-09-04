@@ -4,6 +4,7 @@ require("dotenv").config();
 const app = express();
 const PeliculasRoute = require("./routes/peliculas");
 const CollecRoute = require("./routes/collec");
+const SeriesRoute = require("./routes/series");
 const Userroute = require("./routes/user");
 const UserRoute = require("./routes/us");
 const winston = require("winston");
@@ -75,6 +76,7 @@ const logger = winston.createLogger({
 //routes
 app.use("/api/movies", PeliculasRoute);
 app.use("/api/collec", CollecRoute);
+app.use("/api/series", SeriesRoute);
 app.use("/api", Userroute);
 //start server
 app.listen(PORT, () => {
