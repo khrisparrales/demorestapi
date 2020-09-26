@@ -14,9 +14,7 @@ const SeriesSchema = new mongoose.Schema({
         type: "String",
     },
     rate: {
-        $numberDouble: {
-            type: "Date",
-        },
+        type: Number,
     },
     img: {
         type: "String",
